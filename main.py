@@ -1,3 +1,4 @@
+from lib2to3.pgen2 import driver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import info
@@ -10,7 +11,10 @@ window.minsize(300, 100)
 window.maxsize(300, 100)
 
 def start():
-    driver = webdriver.Firefox()
+    # driver = webdriver.Firefox()
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(options=op)
     driver.get("https://www.instagram.com/")
     login(driver)
     
@@ -30,7 +34,6 @@ def login(driver):
     btn_login = driver.find_element(By.XPATH, "// div[contains(text(),'Log In')]")
     btn_login.click()
     time.sleep(10)
-    print(".........................................")
     btn_not_now = driver.find_element(By.XPATH, "// button[contains(text(),'Not Now')]")
     if btn_not_now:
         btn_not_now.click()
@@ -48,6 +51,7 @@ def login(driver):
 def like_post(driver):
     btn_like = driver.find_element(By.CSS_SELECTOR, "span._aamw")
     btn_like.click()
+    print("done")
 
 
 lbl_link = Label(window, text="Link", width=15)
